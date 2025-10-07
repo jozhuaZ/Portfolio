@@ -24,6 +24,7 @@
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about-me">About Me</a></li>
                 <li><a href="#education">Academic</a></li>
+                <li><a href="#techstack">Tech Stack</a></li>
                 <li><a href="#certificate">Certificate</a></li>
                 <li><a href="#contact">Contact Me</a></li>
             </ul>
@@ -97,9 +98,48 @@
     </section>
 
     <!-- tech stacks -->
-     <!-- core techs -->
-     <!-- tools and platforms -->
-     <!-- currently learning -->
+    <section class="tech-stacks">
+        <!-- core techs -->
+        <div class="core-techs">
+            <div class="tech-container">
+                <
+            </div>
+            <div class="tech-container">
+                <img src="#" alt="HTML" class="tech-img">
+                <h4 class="tech-title">
+                    HTML
+                </h4>
+                <p>70%</p>
+                <div class="slider"></div>
+            </div>
+            <div class="tech-container">
+                <img src="#" alt="CSS" class="tech-img">
+                <h4 class="tech-title">
+                    CSS
+                </h4>
+                <p>50%</p>
+                <div class="slider"></div>
+            </div>
+            <div class="tech-container">
+                <img src="#" alt="PHP" class="tech-img">
+                <h4 class="tech-title">
+                    PHP
+                </h4>
+                <p>50%</p>
+                <div class="slider"></div>
+            </div>
+            <div class="tech-container">
+                <img src="#" alt="JavaScript" class="tech-img">
+                <h4 class="tech-title">
+                    JavaScript
+                </h4>
+                <p>50%</p>
+                <div class="slider"></div>
+            </div>
+        </div>
+        <!-- tools and platforms -->
+        <!-- currently learning -->
+    </section>
 
     <!-- projects -->
 
