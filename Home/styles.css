@@ -112,8 +112,8 @@ html {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 18%; 
-    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, whitesmoke 100%);
+    height: 15%; 
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #e6e6e6 100%);
     pointer-events: none;
 }
 
@@ -137,7 +137,7 @@ html {
   
 .personal-info h1 {
     font-family: "Poppins", "Segoe UI", sans-serif;
-    font-size: 2rem;
+    font-size: 2.5rem;
     margin-bottom: 10px;
 }
 
@@ -206,6 +206,11 @@ html {
   transform: scale(0.95);
 }
 
+.heading-title {
+  font-size: 2.2rem;
+  margin-bottom: 40px;
+}
+
 
 /* ABOUT ME  */
 .about-me {
@@ -213,8 +218,8 @@ html {
     display: flex;
     justify-content: space-evenly; /* push items to edges */
     align-items: center;            /* vertically center */
-    background-color: whitesmoke;
-    /* gap: 20px;                      space between article and aside */
+    background-color: #e6e6e6;
+    gap: 20px;
     padding: 40px;
     font-family: 'Poppins', 'Segoe UI', sans-serif;
 }
@@ -224,8 +229,6 @@ html {
     left: 50%; 
     transform: translateX(-50%); 
     text-align: center; 
-    font-size: 2rem; 
-    /* color: #4a00e0; */
 }
 /* make article text area flexible */
 .about-me article {
@@ -241,8 +244,8 @@ html {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 18%; 
-    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #e6e6e6 100%);
+    height: 15%; 
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #f5f5f5 100%);
     pointer-events: none;
 }
 
@@ -265,8 +268,9 @@ html {
 
 /* EDUCATION TIMELINE */
 .education {
+  position: relative;
   padding: 60px 20px;
-  background: #e6e6e6;
+  background: #f5f5f5;
   text-align: center;
   font-family: 'Poppins', 'Segoe UI', sans-serif;
 }
@@ -276,17 +280,10 @@ html {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 18%; 
-    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, whitesmoke 100%);
+    height: 15%; 
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #e6e6e6 100%);
     pointer-events: none;
 }
-
-.education h2 {
-  font-size: 2rem;
-  margin-bottom: 40px;
-  color: #333;
-}
-
 .timeline {
   position: relative;
   max-width: 700px;
@@ -327,3 +324,136 @@ html {
   margin: 0;
   color: #666;
 }
+
+
+
+/* TECH STACKS */
+/* core techs */
+.tech-stacks {
+  position: relative;
+  padding: 80px 20px;
+  background: #e6e6e6;
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  text-align: center;
+}
+.tech-stacks::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 15%; 
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #f5f5f5 100%);
+    pointer-events: none;
+}
+.subheading-title {
+    font-size: 1.5rem;
+    margin-bottom: 40px; 
+}
+
+.techs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  margin-bottom: 3.5rem;
+}
+
+.tech-container {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tech-container:hover {
+  transform: translateY(-6px); 
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.tech-img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.tech-title {
+  margin: 5px 0;
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.tech-container p {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+/* Slider (progress bar) */
+.slider {
+  width: 100%;
+  height: 8px;
+  background: #ddd;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.slider::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #4f46e5, #6b63ff);
+  border-radius: 4px;
+  transition: width 1s ease-in-out;
+}
+
+/* Specific progress per skill (use nth-child to match each container) */
+.techs .tech-container:nth-child(1) .slider::after {
+  width: 70%;
+}
+
+.techs .tech-container:nth-child(2) .slider::after {
+  width: 50%;
+}
+
+.techs .tech-container:nth-child(3) .slider::after {
+  width: 50%;
+}
+
+.techs .tech-container:nth-child(4) .slider::after {
+  width: 50%;
+}
+
+/* Responsive text & grid behavior */
+@media (max-width: 768px) {
+  .core-techs {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+
+  .tech-title {
+    font-size: 1rem;
+  }
+
+  .tech-img {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tech-container {
+    padding: 15px;
+  }
+
+  .tech-title {
+    font-size: 0.95rem;
+  }
+}
+

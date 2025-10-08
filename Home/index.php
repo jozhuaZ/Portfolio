@@ -21,17 +21,17 @@
         <nav class="header-navigation">
             <h1>JoshDev</h1>
             <ul>
-                <li><a href="#home">Home</a></li>
                 <li><a href="#about-me">About Me</a></li>
-                <li><a href="#education">Academic</a></li>
+                <li><a href="#education">Education</a></li>
                 <li><a href="#techstack">Tech Stack</a></li>
-                <li><a href="#certificate">Certificate</a></li>
+                <li><a href="#project">Projects</a></li>
+                <li><a href="#certificate">Certificates</a></li>
                 <li><a href="#contact">Contact Me</a></li>
             </ul>
         </nav>
     </header>
     <!-- my photo and description -->
-    <section id="home" class="photo-description-container"> <!-- background -->
+    <section class="photo-description-container"> <!-- background -->
         <video autoplay muted loop playsinline class="bg-video">
             <source src="../assets/animation/animation_bg2.mp4" type="video/mp4">
         </video>
@@ -61,7 +61,7 @@
     
     <!-- about me -->
     <section id="about-me" class="about-me">
-        <h2>About Me</h2>
+        <h2 class="heading-title">About Me</h2>
         <article>
             Hello World! I am Joshua, a 3rd-year IT student with a strong passion for web development
             
@@ -75,7 +75,7 @@
 
     <!-- education/academic journey -->
     <section id="education" class="education">
-        <h2>Education Timeline</h2>
+        <h2 class="heading-title">Education Timeline</h2>
         <div class="timeline">
             <div class="timeline-item">
                 <div class="timeline-date">2023 - Present</div>
@@ -98,14 +98,13 @@
     </section>
 
     <!-- tech stacks -->
-    <section class="tech-stacks">
+    <section id="techstack" class="tech-stacks">
+        <h2 class="heading-title">Tech Stacks</h2>
         <!-- core techs -->
-        <div class="core-techs">
+        <h3 class="subheading-title">Core Technology</h3>
+        <div class="techs">
             <div class="tech-container">
-                <
-            </div>
-            <div class="tech-container">
-                <img src="#" alt="HTML" class="tech-img">
+                <img src="../assets/images/html.png" alt="HTML" class="tech-img">
                 <h4 class="tech-title">
                     HTML
                 </h4>
@@ -113,7 +112,7 @@
                 <div class="slider"></div>
             </div>
             <div class="tech-container">
-                <img src="#" alt="CSS" class="tech-img">
+                <img src="../assets/images/css.png" alt="CSS" class="tech-img">
                 <h4 class="tech-title">
                     CSS
                 </h4>
@@ -121,7 +120,15 @@
                 <div class="slider"></div>
             </div>
             <div class="tech-container">
-                <img src="#" alt="PHP" class="tech-img">
+                <img src="../assets/images/js.png" alt="JavaScript" class="tech-img">
+                <h4 class="tech-title">
+                    JavaScript
+                </h4>
+                <p>50%</p>
+                <div class="slider"></div>
+            </div>
+            <div class="tech-container">
+                <img src="../assets/images/php.png" alt="PHP" class="tech-img">
                 <h4 class="tech-title">
                     PHP
                 </h4>
@@ -129,52 +136,131 @@
                 <div class="slider"></div>
             </div>
             <div class="tech-container">
-                <img src="#" alt="JavaScript" class="tech-img">
+                <img src="../assets/images/mysql.png" alt="MySQL" class="tech-img">
                 <h4 class="tech-title">
-                    JavaScript
+                    MySQL
+                </h4>
+                <p>60%</p>
+                <div class="slider"></div>
+            </div>
+        </div>
+        <!-- framework and libraries -->
+        <h3 class="subheading-title">Framework & Libraries</h3>
+        <div class="techs">
+             <div class="tech-container">
+                 <img src="../assets/images/codeigniter.png" alt="CodeIgniter" class="tech-img">
+                 <h4 class="tech-title">
+                     CodeIgniter
+                 </h4>
+                 <p>30%</p>
+                 <div class="slider"></div>
+             </div>
+            <div class="tech-container">
+                <img src="../assets/images/react.png" alt="React" class="tech-img">
+                <h4 class="tech-title">
+                    React
+                </h4>
+                <p>60%</p>
+                <div class="slider"></div>
+            </div>
+            <div class="tech-container">
+                <img src="../assets/images/tailwindss.png" alt="TailwindCSS" class="tech-img">
+                <h4 class="tech-title">
+                    TailwindCSS
                 </h4>
                 <p>50%</p>
                 <div class="slider"></div>
             </div>
-        </div>
+         </div>
         <!-- tools and platforms -->
-        <!-- currently learning -->
+        <h3 class="subheading-title">Tools & Platforms</h3>
+        <div class="techs">
+            <div class="tech-container">
+                <img src="../assets/images/git.png" alt="Git" class="tech-img">
+                <h4 class="tech-title">
+                    Git
+                </h4>
+                <p>30%</p>
+                <div class="slider"></div>
+            </div>
+            <div class="tech-container">
+                <img src="../assets/images/github.png" alt="GitHub" class="tech-img">
+                <h4 class="tech-title">
+                    GitHub
+                </h4>
+                <p>40%</p>
+                <div class="slider"></div>
+            </div>
+            <div class="tech-container">
+                <img src="../assets/images/bitbucket.png" alt="BitBucket" class="tech-img">
+                <h4 class="tech-title">
+                    BitBucket
+                </h4>
+                <p>30%</p>
+                <div class="slider"></div>
+            </div>
+            <div class="tech-container">
+                <img src="../assets/images/vscode.png" alt="VSCode" class="tech-img">
+                <h4 class="tech-title">
+                    VSCode
+                </h4>
+                <p>60%</p>
+                <div class="slider"></div>
+            </div>
+            <div class="tech-container">
+                <img src="../assets/images/lucid.png" alt="LucidChart" class="tech-img">
+                <h4 class="tech-title">
+                    LucidChart
+                </h4>
+                <p>30%</p>
+                <div class="slider"></div>
+            </div>
+        </div>
     </section>
 
     <!-- projects -->
-
+    <section id="project" class="project">
+        
+    </section>
+    
     <!-- certs -->
-
+    <section id="certificate" class="certificate">
+        
+    </section>
+        
     <!-- contacts -->
+    <section id="contact" class="contact">
+        
+    </section>
 </body>
 </html>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const sections = document.querySelectorAll("section");
-  const navLinks = document.querySelectorAll(".header-navigation ul li a");
+    document.addEventListener("DOMContentLoaded", () => {
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll(".header-navigation ul li a");
 
-  const options = {
-    root: null,
-    rootMargin: "0px",
-    threshold: 0.6 // triggers when 60% of section is visible
-  };
+        const options = {
+            root: null,
+            rootMargin: "0px",
+            threshold: 0.6
+        };
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        navLinks.forEach(link => {
-          link.classList.remove("active");
-          if (link.getAttribute("href").substring(1) === entry.target.id) {
-            link.classList.add("active");
-          }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                navLinks.forEach(link => {
+                link.classList.remove("active");
+                if (link.getAttribute("href").substring(1) === entry.target.id) {
+                    link.classList.add("active");
+                }
+                });
+            }
+            });
+        }, options);
+
+        sections.forEach(section => {
+            observer.observe(section);
         });
-      }
     });
-  }, options);
-
-  sections.forEach(section => {
-    observer.observe(section);
-  });
-});
 </script>
