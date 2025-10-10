@@ -44,7 +44,7 @@
         <div class="personal-info">
             <h1>Joshua O. Zabala</h1>
             <p>Hello! I am an aspiring Full-Stack Web Developer.</p>
-            <button class="cssbuttons-io" onclick="">
+            <button class="cssbuttons-io">
                 <span>
                     <svg width="20px" height="20px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <g id="🔍-Product-Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -253,7 +253,7 @@
                         </p>
                         <div class="texts">
                             <a class="repository-link" href="https://github.com/jozhuaZ/Portfolio" target="_blank">Repository</a>
-                            <p class="description" onclick="toggleProjectExpansion(this)">Show more</p> 
+                            <p class="description" onclick="">Show more</p> 
                         </div>
                     </div>
                 </div>
@@ -270,7 +270,7 @@
                         
                         <div class="texts">
                             <a class="repository-link" href="https://github.com/jozhuaZ/Portfolio" target="_blank">Repository</a>
-                            <p class="description" onclick="toggleProjectExpansion(this)">Show more</p> 
+                            <p class="description" onclick="">Show more</p> 
                         </div>
                     </div>
                 </div>
@@ -289,7 +289,7 @@
                         
                         <div class="texts">
                             <a class="repository-link" href="https://github.com/jozhuaZ/ExamScheduling" target="_blank">Repository</a>
-                            <p class="description" onclick="toggleProjectExpansion(this)">Show more</p> 
+                            <p class="description" onclick="">Show more</p> 
                         </div> 
                     </div>
                 </div>
@@ -470,7 +470,6 @@
         overlay.style.display = 'none';
     }
 
-    // Optional: Close overlay if clicked outside the expanded card
     document.querySelector('.project-overlay')?.addEventListener('click', (e) => {
         if (e.target === e.currentTarget) {
             closeAllExpandedProjects();
