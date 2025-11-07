@@ -17,6 +17,7 @@
     <title>Profile - Joshua Zabala</title>
 </head>
 <body>
+    <?php include 'parts/projectOverlay.php' ?>
     
     <?php include 'parts/header.php' ?>
 
@@ -58,10 +59,6 @@
     <?php include 'sections/projects.php'; ?>
 
     <?php include 'sections/contact.php'; ?>
-
-    <div class="project-overlay" onclick="closeAllExpandedProjects()"></div>
-    
-    <div class="project-overlay" onclick="closeAllExpandedProjects()"></div>
     
     <script src="scripts/main.js"></script>
 </body>
