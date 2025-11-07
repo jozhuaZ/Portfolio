@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,9 +17,10 @@
 
     <title>Profile - Joshua Zabala</title>
 </head>
+
 <body>
     <?php include 'parts/projectOverlay.php' ?>
-    
+
     <?php include 'parts/header.php' ?>
 
     <!-- my photo and description -->
@@ -30,7 +32,7 @@
         <div class="profile-photo">
             <img src="./assets/images/my_pic.jpg" alt="Joshua Zabala">
         </div>
-        
+
         <!-- my personal info -->
         <div class="personal-info">
             <h1>Joshua O. Zabala</h1>
@@ -49,7 +51,7 @@
             </button>
         </div>
     </section>
-    
+
     <?php include 'sections/aboutMe.php'; ?>
 
     <?php include 'sections/education.php'; ?>
@@ -59,7 +61,10 @@
     <?php include 'sections/projects.php'; ?>
 
     <?php include 'sections/contact.php'; ?>
-    
+
+    <?php include 'parts/footer.php'; ?>
+
     <script src="scripts/main.js"></script>
 </body>
+
 </html>
