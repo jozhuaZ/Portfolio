@@ -14,11 +14,14 @@
 
 <body class="layout">
     <!-- HEADER -->
-    <header>
+    <!-- <header>
         <nav class="header-navigation">
             <h1>JoshDev</h1>
         </nav>
-    </header>
+    </header> -->
+
+    <!-- flash messages -->
+    <?php include '../../parts/flashMessage.php'; ?>
 
     <!-- MAIN SECTION -->
     <main class="main-content">
@@ -26,7 +29,7 @@
             <source src="../../assets/animation/animation_bg2.mp4" type="video/mp4">
         </video>
 
-        <form class="login-form" method="POST" action="/login/auth">
+        <form class="login-form" method="post" action="../../database/login.php">
             <h2>Login</h2>
 
             <div class="input-group">
