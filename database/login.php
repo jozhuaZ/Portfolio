@@ -1,52 +1,68 @@
 <?php
-session_start();
+session_start(); // Start the session at the very beginning
 
-// establish a connection
+// Establish a connection
 include('./connect.php');
 $conn = connect();
 
-// set variables from Sign In form
+// Set variables from Sign In form
 $email = $_POST['email'] ?? null;
 $password = $_POST['password'] ?? null;
 
 if (!$email || !$password) {
-    // redirect to index.php
+    // Redirect to index.php
     $_SESSION['flash_error'] = 'Please fill in all credential fields to proceed.';
-    header('Location: index.php');
+    header('Location: ../page/login');
     exit;
 }
 
 try {
-    // check if connection is established
+    // Check if connection is established
     if (is_null($conn)) {
-        // redirect to page/login/index.php
+        // Redirect to page/login/index.php
         $_SESSION['flash_error'] = 'Server Error. Please try again later.';
         header('Location: ../page/login');
         exit;
     }
 
-    $query = "SELECT * FROM admin WHERE email = :email LIMIT 1";
-    $stmt  = $conn->prepare($query);
-    $stmt->execute([':email' => $email]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    // Prepare statement to prevent SQL injection
+    $query = "SELECT * FROM admin WHERE email = ? LIMIT 1";
+    $stmt = $conn->prepare($query);
 
-    // no existing user with the input email
+    if (!$stmt) {
+        throw new Exception("Prepare failed: " . $conn->error);
+    }
+
+    // Bind parameters (s = string)
+    $stmt->bind_param("s", $email);
+
+    // Execute the statement
+    $stmt->execute();
+
+    // Get result
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
+
+    // Close statement
+    $stmt->close();
+
+    // No existing user with the input email
     if (!$user) {
-        //redirect to index.php
+        // Redirect to index.php
         $_SESSION['flash_error'] = 'User not found. Please try again.';
         header('Location: ../page/login');
         exit;
     }
 
-    // verify if password is matched to stored hashed (hashed password on database)
+    // Verify if password is matched to stored hash
     if (!password_verify($password, $user['password'])) {
-        // redirect to index.php
+        // Redirect to index.php
         $_SESSION['flash_error'] = 'Incorrect Password.';
         header('Location: ../page/login');
         exit;
     }
 
-    // set user info on session
+    // Set user info on session
     session_regenerate_id(true);
     $_SESSION['email'] = $user['email'];
     $_SESSION['name'] = $user['name'];
@@ -58,11 +74,22 @@ try {
     $_SESSION['github_link'] = $user['github_link'];
     $_SESSION['is_logged_in'] = true;
 
-    // redirect to home
-    header('Location: ../../index.php');
-} catch (PDOException $e) {
-    // redirect to index.php
+    // Close connection
+    $conn->close();
+
+    header('Location: ../');
+    exit; // Ensure the script stops executing immediately after the header
+
+} catch (Exception $e) {
+    // Handle Exception, log the error if necessary
+    error_log($e->getMessage());
     $_SESSION['flash_error'] = 'Server Error. Please try again later.';
-    header('Location: ../index.php'); // ERROR 500  
+
+    // Close connection if it exists
+    if ($conn) {
+        $conn->close();
+    }
+
+    header('Location: ../'); // ERROR 500
     exit;
 }

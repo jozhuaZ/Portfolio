@@ -5,17 +5,25 @@ function connect()
     $servername = 'localhost';
     $username = 'root';
     $password = '';
+    $database = 'portfolio';
 
     try {
-        $conn = new PDO("mysql:host=$servername;dbname=MidtermSystem",  $username, $password);
+        // Create MySQLi connection
+        $conn = new mysqli($servername, $username, $password, $database);
 
-        // sets the PDO error mode to exception
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        // Check connection
+        if ($conn->connect_error) {
+            throw new Exception("Connection failed: " . $conn->connect_error);
+        }
 
-        // established connection
+        // Set charset to utf8mb4 for proper character encoding
+        $conn->set_charset("utf8mb4");
+
+        // Established connection
         return $conn;
-    } catch (PDOException $e) {
-        // failed to establish a connection
+    } catch (Exception $e) {
+        // Failed to establish a connection
         error_log($e->getMessage());
+        return null;
     }
 }

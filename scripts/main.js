@@ -192,3 +192,310 @@ function showLess() {
     overlay.style.display = "none";
     document.body.classList.remove("overlay-active");
 }
+
+
+
+// ============================
+// ADMIN PANEL FUNCTIONALITY - FIXED
+// ============================
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Check if admin elements exist (user is logged in)
+    const adminToggleBtn = document.getElementById('admin-toggle-btn');
+    const adminSidebar = document.getElementById('admin-sidebar');
+    const closeSidebarBtn = document.getElementById('close-sidebar-btn');
+    const editContentArea = document.getElementById('edit-content-area');
+    const adminNavLinks = document.querySelectorAll('.admin-nav li');
+
+    if (!adminToggleBtn || !adminSidebar) return;
+
+    // Toggle sidebar open
+    adminToggleBtn.addEventListener('click', function (e) {
+        e.stopPropagation(); // Prevent event bubbling
+        adminSidebar.classList.add('open');
+    });
+
+    // Close sidebar
+    closeSidebarBtn.addEventListener('click', function (e) {
+        e.stopPropagation(); // Prevent event bubbling
+        adminSidebar.classList.remove('open');
+    });
+
+    // Close sidebar when clicking outside - FIXED
+    document.addEventListener('click', function (e) {
+        // Only close if sidebar is open AND click is outside both sidebar and toggle button
+        if (adminSidebar.classList.contains('open') &&
+            !adminSidebar.contains(e.target) &&
+            !adminToggleBtn.contains(e.target)) {
+            adminSidebar.classList.remove('open');
+        }
+    });
+
+    // Prevent sidebar from closing when clicking inside it
+    adminSidebar.addEventListener('click', function (e) {
+        e.stopPropagation();
+    });
+
+    // Section navigation
+    adminNavLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.stopPropagation(); // Prevent sidebar from closing
+            const section = this.getAttribute('data-section');
+
+            // Update active state
+            adminNavLinks.forEach(l => l.classList.remove('active'));
+            this.classList.add('active');
+
+            // Load section content
+            loadSection(section);
+        });
+    });
+
+    // Load section content via AJAX
+    function loadSection(section) {
+        // Show loading spinner
+        editContentArea.innerHTML = `
+            <div class="admin-loading">
+                <div class="admin-spinner"></div>
+            </div>
+        `;
+
+        // Fetch section content
+        fetch(`admin_handler.php?action=get_form&section=${section}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    editContentArea.innerHTML = data.html;
+                    attachFormHandlers();
+                } else {
+                    showError(data.message || 'Failed to load section');
+                }
+            })
+            .catch(error => {
+                console.error('Error loading section:', error);
+                showError('An error occurred while loading the section');
+            });
+    }
+
+    // Attach event handlers to dynamically loaded forms
+    function attachFormHandlers() {
+        // Handle form submissions
+        const forms = editContentArea.querySelectorAll('.admin-form');
+        forms.forEach(form => {
+            form.addEventListener('submit', handleFormSubmit);
+            // Prevent form clicks from closing sidebar
+            form.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+        });
+
+        // Handle edit buttons
+        const editBtns = editContentArea.querySelectorAll('.edit-btn');
+        editBtns.forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation(); // Prevent sidebar from closing
+                const section = this.getAttribute('data-section');
+                const id = this.getAttribute('data-id');
+                loadEditForm(section, id);
+            });
+        });
+
+        // Handle delete buttons
+        const deleteBtns = editContentArea.querySelectorAll('.delete-btn');
+        deleteBtns.forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation(); // Prevent sidebar from closing
+                if (confirm('Are you sure you want to delete this item?')) {
+                    const section = this.getAttribute('data-section');
+                    const id = this.getAttribute('data-id');
+                    deleteItem(section, id);
+                }
+            });
+        });
+
+        // Handle add new buttons
+        const addBtns = editContentArea.querySelectorAll('.add-new-btn');
+        addBtns.forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation(); // Prevent sidebar from closing
+                const section = this.getAttribute('data-section');
+                loadAddForm(section);
+            });
+        });
+
+        // Handle cancel buttons
+        const cancelBtns = editContentArea.querySelectorAll('.cancel-btn');
+        cancelBtns.forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation(); // Prevent sidebar from closing
+                const section = this.getAttribute('data-section');
+                loadSection(section);
+            });
+        });
+    }
+
+    // Handle form submission
+    function handleFormSubmit(e) {
+        e.preventDefault();
+        e.stopPropagation(); // Prevent sidebar from closing
+
+        const form = e.target;
+        const formData = new FormData(form);
+
+        // Show loading state
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Saving...';
+
+        // Submit form data
+        fetch('admin_handler.php', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showSuccess(data.message || 'Changes saved successfully');
+                    // Reload the section after a short delay
+                    setTimeout(() => {
+                        const section = formData.get('section');
+                        loadSection(section);
+                    }, 1000);
+                } else {
+                    showError(data.message || 'Failed to save changes');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalText;
+                }
+            })
+            .catch(error => {
+                console.error('Error submitting form:', error);
+                showError('An error occurred while saving changes');
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            });
+    }
+
+    // Load edit form for specific item
+    function loadEditForm(section, id) {
+        editContentArea.innerHTML = `
+            <div class="admin-loading">
+                <div class="admin-spinner"></div>
+            </div>
+        `;
+
+        fetch(`admin_handler.php?action=get_edit_form&section=${section}&id=${id}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    editContentArea.innerHTML = data.html;
+                    attachFormHandlers();
+                } else {
+                    showError(data.message || 'Failed to load edit form');
+                }
+            })
+            .catch(error => {
+                console.error('Error loading edit form:', error);
+                showError('An error occurred while loading the edit form');
+            });
+    }
+
+    // Load add new form
+    function loadAddForm(section) {
+        editContentArea.innerHTML = `
+            <div class="admin-loading">
+                <div class="admin-spinner"></div>
+            </div>
+        `;
+
+        fetch(`admin_handler.php?action=get_add_form&section=${section}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    editContentArea.innerHTML = data.html;
+                    attachFormHandlers();
+                } else {
+                    showError(data.message || 'Failed to load add form');
+                }
+            })
+            .catch(error => {
+                console.error('Error loading add form:', error);
+                showError('An error occurred while loading the add form');
+            });
+    }
+
+    // Delete item
+    function deleteItem(section, id) {
+        // Show loading in button area
+        const deleteBtn = document.querySelector(`.delete-btn[data-id="${id}"]`);
+        if (deleteBtn) {
+            deleteBtn.textContent = 'Deleting...';
+            deleteBtn.disabled = true;
+        }
+
+        fetch('admin_handler.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `action=delete&section=${section}&id=${id}`
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showSuccess(data.message || 'Item deleted successfully');
+                    loadSection(section);
+                } else {
+                    showError(data.message || 'Failed to delete item');
+                    if (deleteBtn) {
+                        deleteBtn.textContent = 'Delete';
+                        deleteBtn.disabled = false;
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error deleting item:', error);
+                showError('An error occurred while deleting the item');
+                if (deleteBtn) {
+                    deleteBtn.textContent = 'Delete';
+                    deleteBtn.disabled = false;
+                }
+            });
+    }
+
+    // Show success message
+    function showSuccess(message) {
+        // Remove any existing messages
+        const existingMessages = editContentArea.querySelectorAll('.admin-message');
+        existingMessages.forEach(msg => msg.remove());
+
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'admin-message admin-message-success';
+        messageDiv.textContent = message;
+        editContentArea.insertBefore(messageDiv, editContentArea.firstChild);
+
+        setTimeout(() => {
+            messageDiv.remove();
+        }, 5000);
+    }
+
+    // Show error message
+    function showError(message) {
+        // Remove any existing messages
+        const existingMessages = editContentArea.querySelectorAll('.admin-message');
+        existingMessages.forEach(msg => msg.remove());
+
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'admin-message admin-message-error';
+        messageDiv.textContent = message;
+        editContentArea.insertBefore(messageDiv, editContentArea.firstChild);
+
+        setTimeout(() => {
+            messageDiv.remove();
+        }, 5000);
+    }
+});

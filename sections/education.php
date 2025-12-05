@@ -3,23 +3,30 @@
     <div class="section-content">
         <h2 class="heading-title">Education Timeline</h2>
         <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-date">2023 - Present</div>
-                <div class="timeline-content">
-                    <h3>Bachelor of Science in Information Technology</h3>
-                    <p>Camarines Sur Polytechnic Colleges</p>
-                    <p>Nabua, Camarines Sur</p>
-                </div>
-            </div>
+            <?php
+            // Reset the result pointer to fetch data again
+            mysqli_data_seek($education_result, 0);
 
-            <div class="timeline-item">
-                <div class="timeline-date">2021 - 2023</div>
-                <div class="timeline-content">
-                    <h3>Senior High School (STEM Strand)</h3>
-                    <p>University of Saint Anthony, Senior High School</p>
-                    <p>Iriga City, Camarines Sur</p>
-                </div>
-            </div>
+            if (mysqli_num_rows($education_result) > 0):
+                while ($edu = mysqli_fetch_assoc($education_result)):
+            ?>
+                    <div class="timeline-item">
+                        <div class="timeline-date">
+                            <?php echo htmlspecialchars($edu['start_year']); ?> -
+                            <?php echo $edu['end_year'] == date('Y') ? 'Present' : htmlspecialchars($edu['end_year']); ?>
+                        </div>
+                        <div class="timeline-content">
+                            <h3><?php echo htmlspecialchars($edu['title']); ?></h3>
+                            <p><?php echo htmlspecialchars($edu['school']); ?></p>
+                            <p><?php echo htmlspecialchars($edu['school_address']); ?></p>
+                        </div>
+                    </div>
+                <?php
+                endwhile;
+            else:
+                ?>
+                <p style="text-align: center; color: #666;">No education records found.</p>
+            <?php endif; ?>
         </div>
     </div>
 </section>

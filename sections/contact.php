@@ -15,24 +15,49 @@
                             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                             <polyline points="22,6 12,13 2,6"></polyline>
                         </svg>
-                        <a href="mailto:joshuazabala693@gmail.com">joshuazabala693@gmail.com</a>
+                        <a href="mailto:<?php echo htmlspecialchars($admin_data['email'] ?? 'joshuazabala693@gmail.com'); ?>">
+                            <?php echo htmlspecialchars($admin_data['email'] ?? 'joshuazabala693@gmail.com'); ?>
+                        </a>
                     </div>
+
+                    <?php if (!empty($admin_data['contact_no'])): ?>
+                        <div class="contact-detail" style="margin-top: 10px;">
+                            <!-- Icon for Phone -->
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-mail" style="width: 20px; height: 20px;">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                            <a href="tel:<?php echo htmlspecialchars($admin_data['contact_no']); ?>">
+                                <?php echo htmlspecialchars($admin_data['contact_no']); ?>
+                            </a>
+                        </div>
+                    <?php endif; ?>
                 </div>
 
                 <!-- Social Links at the bottom left -->
                 <div class="social-links">
-                    <a href="https://www.github.com/jozhuaZ" target="_blank" class="social-icon github" aria-label="Github Profile">
-                        <!-- GitHub Icon SVG (Use your existing accent colors) -->
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 0C5.372 0 0 5.372 0 12c0 5.303 3.438 9.8 8.207 11.385.6.111.82-.257.82-.57 0-.28-.01-1.017-.015-2.001-3.337.724-4.043-1.611-4.043-1.611-.546-1.384-1.332-1.753-1.332-1.753-1.089-.745.083-.73.083-.73 1.205.084 1.838 1.234 1.838 1.234 1.07 1.832 2.808 1.303 3.493.996.108-.775.419-1.303.76-1.603-2.665-.304-5.466-1.332-5.466-5.93 0-1.31.468-2.383 1.233-3.224-.124-.304-.535-1.524.117-3.176 0 0 1.006-.322 3.3-1.232 0 0 .954-.265 1.85-.27 0 0 .9-.005 1.85.27 2.295.91 3.3 1.232 3.3 1.232.652 1.652.24 2.872.118 3.176.764.841 1.232 1.914 1.232 3.224 0 4.61-2.805 5.623-5.474 5.922.43.37.817 1.107.817 2.233 0 1.614-.015 2.915-.015 3.314 0 .317.218.682.827.568C20.562 21.8 24 17.303 24 12 24 5.372 18.628 0 12 0z" />
-                        </svg>
-                    </a>
-                    <a href="https://www.facebook.com/joshua.zabal.1/" target="_blank" class="social-icon facebook" aria-label="Facebook Profile">
-                        <!-- Facebook Icon SVG -->
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12c5.961 0 10.994-4.321 11.885-10.027.126-.816.19-1.642.19-2.473 0-6.627-5.373-12-12-12zm-2.028 17.218v-5.945h-1.996V9.664h1.996V7.781c0-1.984 1.185-3.07 3.018-3.07 1.981 0 3.018.148 3.018.148v3.313h-1.706c-.838 0-1.1.521-1.1 1.054v1.89h2.919l-.468 2.58h-2.451v5.945h-3.003z" />
-                        </svg>
-                    </a>
+                    <?php if (!empty($admin_data['github_link'])): ?>
+                        <a href="<?php echo htmlspecialchars($admin_data['github_link']); ?>"
+                            target="_blank"
+                            class="social-icon github"
+                            aria-label="Github Profile">
+                            <!-- GitHub Icon SVG -->
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0C5.372 0 0 5.372 0 12c0 5.303 3.438 9.8 8.207 11.385.6.111.82-.257.82-.57 0-.28-.01-1.017-.015-2.001-3.337.724-4.043-1.611-4.043-1.611-.546-1.384-1.332-1.753-1.332-1.753-1.089-.745.083-.73.083-.73 1.205.084 1.838 1.234 1.838 1.234 1.07 1.832 2.808 1.303 3.493.996.108-.775.419-1.303.76-1.603-2.665-.304-5.466-1.332-5.466-5.93 0-1.31.468-2.383 1.233-3.224-.124-.304-.535-1.524.117-3.176 0 0 1.006-.322 3.3-1.232 0 0 .954-.265 1.85-.27 0 0 .9-.005 1.85.27 2.295.91 3.3 1.232 3.3 1.232.652 1.652.24 2.872.118 3.176.764.841 1.232 1.914 1.232 3.224 0 4.61-2.805 5.623-5.474 5.922.43.37.817 1.107.817 2.233 0 1.614-.015 2.915-.015 3.314 0 .317.218.682.827.568C20.562 21.8 24 17.303 24 12 24 5.372 18.628 0 12 0z" />
+                            </svg>
+                        </a>
+                    <?php endif; ?>
+
+                    <?php if (!empty($admin_data['facebook_link'])): ?>
+                        <a href="<?php echo htmlspecialchars($admin_data['facebook_link']); ?>"
+                            target="_blank"
+                            class="social-icon facebook"
+                            aria-label="Facebook Profile">
+                            <!-- Facebook Icon SVG -->
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12c5.961 0 10.994-4.321 11.885-10.027.126-.816.19-1.642.19-2.473 0-6.627-5.373-12-12-12zm-2.028 17.218v-5.945h-1.996V9.664h1.996V7.781c0-1.984 1.185-3.07 3.018-3.07 1.981 0 3.018.148 3.018.148v3.313h-1.706c-.838 0-1.1.521-1.1 1.054v1.89h2.919l-.468 2.58h-2.451v5.945h-3.003z" />
+                            </svg>
+                        </a>
+                    <?php endif; ?>
                 </div>
             </div>
 
