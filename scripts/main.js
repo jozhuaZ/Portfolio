@@ -261,7 +261,7 @@ document.addEventListener('DOMContentLoaded', function () {
         `;
 
         // Fetch section content
-        fetch(`admin_handler.php?action=get_form&section=${section}`)
+        fetch(`database/admin_handler.php?action=get_form&section=${section}`)
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
@@ -353,7 +353,7 @@ document.addEventListener('DOMContentLoaded', function () {
         submitBtn.textContent = 'Saving...';
 
         // Submit form data
-        fetch('admin_handler.php', {
+        fetch('database/admin_handler.php', {
             method: 'POST',
             body: formData
         })
@@ -388,7 +388,7 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
         `;
 
-        fetch(`admin_handler.php?action=get_edit_form&section=${section}&id=${id}`)
+        fetch(`database/admin_handler.php?action=get_edit_form&section=${section}&id=${id}`)
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
@@ -412,7 +412,7 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
         `;
 
-        fetch(`admin_handler.php?action=get_add_form&section=${section}`)
+        fetch(`database/admin_handler.php?action=get_add_form&section=${section}`)
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
@@ -437,7 +437,7 @@ document.addEventListener('DOMContentLoaded', function () {
             deleteBtn.disabled = true;
         }
 
-        fetch('admin_handler.php', {
+        fetch('database/admin_handler.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -499,3 +499,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 5000);
     }
 });
+
+function updateCopyrightYear() {
+    const currentYear = new Date().getFullYear();
+    const yearSpan = document.getElementById('current-year');
+
+    if (yearSpan) {
+        yearSpan.textContent = currentYear;
+    }
+}
+
+updateCopyrightYear();

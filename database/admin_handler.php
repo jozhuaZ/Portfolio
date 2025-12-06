@@ -122,7 +122,7 @@ function getPersonalInfoForm($conn)
         
         <div class="form-group">
             <label>Email (Primary Key - Cannot Change)</label>
-            <input type="email" value="' . htmlspecialchars($data['email']) . '" disabled>
+            <input type="email" value="' . htmlspecialchars($data['email']) . '" disabled style="opacity: 0.6; cursor: not-allowed;">
         </div>
         
         <div class="form-group">
@@ -143,13 +143,13 @@ function getPersonalInfoForm($conn)
         <div class="form-group">
             <label>First Image (Profile Photo)</label>
             <input type="file" name="first_image" accept="image/*">
-            ' . (isset($data['first_image']) ? '<p style="font-size: 12px; color: #94a3b8;">Current: ' . htmlspecialchars($data['first_image']) . '</p>' : '') . '
+            ' . (isset($data['first_image']) && $data['first_image'] ? '<p style="font-size: 12px; color: #94a3b8;">Current: ' . htmlspecialchars($data['first_image']) . '</p>' : '') . '
         </div>
         
         <div class="form-group">
             <label>Second Image (Background/Banner)</label>
             <input type="file" name="second_image" accept="image/*">
-            ' . (isset($data['second_image']) ? '<p style="font-size: 12px; color: #94a3b8;">Current: ' . htmlspecialchars($data['second_image']) . '</p>' : '') . '
+            ' . (isset($data['second_image']) && $data['second_image'] ? '<p style="font-size: 12px; color: #94a3b8;">Current: ' . htmlspecialchars($data['second_image']) . '</p>' : '') . '
         </div>
         
         <div class="form-group">
@@ -184,6 +184,10 @@ function getEducationList($conn)
     $html = '<h3 style="color: #ffffff; margin-bottom: 20px;">Education</h3>';
     $html .= '<button class="admin-btn admin-btn-success add-new-btn" data-section="education" style="margin-bottom: 20px;">+ Add New Education</button>';
     $html .= '<div class="admin-item-list">';
+
+    if (mysqli_num_rows($result) == 0) {
+        $html .= '<p style="text-align: center; color: #94a3b8; padding: 20px;">No education records found.</p>';
+    }
 
     while ($row = mysqli_fetch_assoc($result)) {
         $html .= '
@@ -275,12 +279,16 @@ function getTechStackList($conn)
     $html .= '<button class="admin-btn admin-btn-success add-new-btn" data-section="tech_stack" style="margin-bottom: 20px;">+ Add New Technology</button>';
     $html .= '<div class="admin-item-list">';
 
+    if (mysqli_num_rows($result) == 0) {
+        $html .= '<p style="text-align: center; color: #94a3b8; padding: 20px;">No tech stack records found.</p>';
+    }
+
     while ($row = mysqli_fetch_assoc($result)) {
         $html .= '
         <div class="admin-item">
             <div class="admin-item-info">
                 <h4>' . htmlspecialchars($row['name']) . '</h4>
-                <p>Proficiency: ' . $row['percentage'] . '% | Type: ' . ucfirst($row['type']) . '</p>
+                <p>Proficiency: ' . $row['percentage'] . '% | Type: ' . htmlspecialchars($row['type']) . '</p>
             </div>
             <div class="admin-item-actions">
                 <button class="admin-btn admin-btn-primary admin-btn-sm edit-btn" data-section="tech_stack" data-id="' . $row['id'] . '">Edit</button>
@@ -311,6 +319,10 @@ function getProjectList($conn)
     $html .= '<button class="admin-btn admin-btn-success add-new-btn" data-section="project" style="margin-bottom: 20px;">+ Add New Project</button>';
     $html .= '<div class="admin-item-list">';
 
+    if (mysqli_num_rows($result) == 0) {
+        $html .= '<p style="text-align: center; color: #94a3b8; padding: 20px;">No project records found.</p>';
+    }
+
     while ($row = mysqli_fetch_assoc($result)) {
         $html .= '
         <div class="admin-item">
@@ -330,6 +342,9 @@ function getProjectList($conn)
     return ['success' => true, 'html' => $html];
 }
 
+// ============================
+// GET EDIT FORM HTML
+// ============================
 
 function getEditFormHTML($section, $id, $conn)
 {
@@ -371,15 +386,15 @@ function getEditFormHTML($section, $id, $conn)
             <div class="form-group">
                 <label>Image/Icon</label>
                 <input type="file" name="image" accept="image/*">
-                ' . (isset($data['image']) ? '<p style="font-size: 12px; color: #94a3b8;">Current: ' . htmlspecialchars($data['image']) . '</p>' : '') . '
+                ' . (isset($data['image']) && $data['image'] ? '<p style="font-size: 12px; color: #94a3b8;">Current: ' . htmlspecialchars($data['image']) . '</p>' : '') . '
             </div>
             
             <div class="form-group">
                 <label>Type</label>
                 <select name="type" required>
-                    <option value="Core Technology" ' . ($data['type'] === 'Core Technology' ? 'selected' : '') . '>Core Technology</option>
-                    <option value="Framework & Libraries" ' . ($data['type'] === 'Framework & Libraries' ? 'selected' : '') . '>Framework & Libraries</option>
-                    <option value="Tools & Platforms" ' . ($data['type'] === 'Tools & Platforms' ? 'selected' : '') . '>Tools & Platforms</option>
+                    <option style="color: black;" value="Core Technology" ' . ($data['type'] === 'Core Technology' ? 'selected' : '') . '>Core Technology</option>
+                    <option style="color: black;" value="Framework & Libraries" ' . ($data['type'] === 'Framework & Libraries' ? 'selected' : '') . '>Framework & Libraries</option>
+                    <option style="color: black;" value="Tools and Platforms" ' . ($data['type'] === 'Tools and Platforms' ? 'selected' : '') . '>Tools and Platforms</option>
                 </select>
             </div>
             
@@ -419,7 +434,7 @@ function getEditFormHTML($section, $id, $conn)
             <div class="form-group">
                 <label>Project Image</label>
                 <input type="file" name="image" accept="image/*">
-                ' . (isset($data['image']) ? '<p style="font-size: 12px; color: #94a3b8;">Current: ' . htmlspecialchars($data['image']) . '</p>' : '') . '
+                ' . (isset($data['image']) && $data['image'] ? '<p style="font-size: 12px; color: #94a3b8;">Current: ' . htmlspecialchars($data['image']) . '</p>' : '') . '
             </div>
             
             <div class="form-group">
@@ -453,7 +468,6 @@ function getEditFormHTML($section, $id, $conn)
 
     return ['success' => false, 'message' => 'Invalid section'];
 }
-
 
 // ============================
 // ADD FORM HTML FUNCTIONS
@@ -527,10 +541,10 @@ function getAddFormHTML($section)
             <div class="form-group">
                 <label>Type</label>
                 <select name="type" required>
-                    <option value="">Select Type</option>
-                    <option value="Core Technology">Core Technology</option>
-                    <option value="Framework & Libraries">Framework & Libraries</option>
-                    <option value="Tools & Platforms">Tools & Platforms</option>
+                    <option style="color: black;" value="">Select Type</option>
+                    <option style="color: black;" value="Core Technology">Core Technology</option>
+                    <option style="color: black;" value="Framework & Libraries">Framework & Libraries</option>
+                    <option style="color: black;" value="Tools and Platforms">Tools and Platforms</option>
                 </select>
             </div>
             
@@ -601,19 +615,18 @@ function handleUpdate($data, $conn)
     $section = mysqli_real_escape_string($conn, $data['section']);
 
     if ($section === 'admin') {
-        // For admin, use email instead of id
+        // Use EMAIL instead of ID for admin table
         $email = mysqli_real_escape_string($conn, $data['email']);
         return updatePersonalInfo($data, $conn, $email);
-    } else {
-        // For other sections, use id
+    } elseif ($section === 'education') {
         $id = intval($data['id']);
-        if ($section === 'education') {
-            return updateEducation($data, $conn, $id);
-        } elseif ($section === 'tech_stack') {
-            return updateTechStack($data, $conn, $id);
-        } elseif ($section === 'project') {
-            return updateProject($data, $conn, $id);
-        }
+        return updateEducation($data, $conn, $id);
+    } elseif ($section === 'tech_stack') {
+        $id = intval($data['id']);
+        return updateTechStack($data, $conn, $id);
+    } elseif ($section === 'project') {
+        $id = intval($data['id']);
+        return updateProject($data, $conn, $id);
     }
 
     return ['success' => false, 'message' => 'Invalid section'];
@@ -628,19 +641,18 @@ function updatePersonalInfo($data, $conn, $email)
     $facebook_link = mysqli_real_escape_string($conn, $data['facebook_link']);
     $github_link = mysqli_real_escape_string($conn, $data['github_link']);
 
-    $query = "UPDATE admin SET 
-              name = '$name',
-              bio = '$bio',
-              description = '$description',
-              contact_no = '$contact_no',
-              facebook_link = '$facebook_link',
-              github_link = '$github_link'";
+    // Use email as WHERE condition (primary key)
+    $stmt = mysqli_prepare($conn, "UPDATE admin SET name = ?, bio = ?, description = ?, contact_no = ?, facebook_link = ?, github_link = ? WHERE email = ?");
+    mysqli_stmt_bind_param($stmt, "sssssss", $name, $bio, $description, $contact_no, $facebook_link, $github_link, $email);
 
     // Handle first image upload
     if (isset($_FILES['first_image']) && $_FILES['first_image']['error'] === 0) {
         $first_image = uploadImage($_FILES['first_image'], 'profile');
         if ($first_image) {
-            $query .= ", first_image = '$first_image'";
+            $stmt2 = mysqli_prepare($conn, "UPDATE admin SET first_image = ? WHERE email = ?");
+            mysqli_stmt_bind_param($stmt2, "ss", $first_image, $email);
+            mysqli_stmt_execute($stmt2);
+            mysqli_stmt_close($stmt2);
         }
     }
 
@@ -648,16 +660,26 @@ function updatePersonalInfo($data, $conn, $email)
     if (isset($_FILES['second_image']) && $_FILES['second_image']['error'] === 0) {
         $second_image = uploadImage($_FILES['second_image'], 'banner');
         if ($second_image) {
-            $query .= ", second_image = '$second_image'";
+            $stmt3 = mysqli_prepare($conn, "UPDATE admin SET second_image = ? WHERE email = ?");
+            mysqli_stmt_bind_param($stmt3, "ss", $second_image, $email);
+            mysqli_stmt_execute($stmt3);
+            mysqli_stmt_close($stmt3);
         }
     }
 
-    // Use email as WHERE condition since it's the primary key
-    $query .= " WHERE email = '$email'";
+    if (mysqli_stmt_execute($stmt)) {
+        mysqli_stmt_close($stmt);
 
-    if (mysqli_query($conn, $query)) {
+        // Update session data
+        $_SESSION['name'] = $name;
+        $_SESSION['bio'] = $bio;
+        $_SESSION['contact_no'] = $contact_no;
+        $_SESSION['facebook_link'] = $facebook_link;
+        $_SESSION['github_link'] = $github_link;
+
         return ['success' => true, 'message' => 'Personal information updated successfully'];
     } else {
+        mysqli_stmt_close($stmt);
         return ['success' => false, 'message' => 'Failed to update personal information: ' . mysqli_error($conn)];
     }
 }
@@ -670,17 +692,14 @@ function updateEducation($data, $conn, $id)
     $start_year = intval($data['start_year']);
     $end_year = intval($data['end_year']);
 
-    $query = "UPDATE education SET 
-              title = '$title',
-              school = '$school',
-              school_address = '$school_address',
-              start_year = $start_year,
-              end_year = $end_year
-              WHERE id = $id";
+    $stmt = mysqli_prepare($conn, "UPDATE education SET title = ?, school = ?, school_address = ?, start_year = ?, end_year = ? WHERE id = ?");
+    mysqli_stmt_bind_param($stmt, "sssiii", $title, $school, $school_address, $start_year, $end_year, $id);
 
-    if (mysqli_query($conn, $query)) {
+    if (mysqli_stmt_execute($stmt)) {
+        mysqli_stmt_close($stmt);
         return ['success' => true, 'message' => 'Education updated successfully'];
     } else {
+        mysqli_stmt_close($stmt);
         return ['success' => false, 'message' => 'Failed to update education: ' . mysqli_error($conn)];
     }
 }
@@ -691,24 +710,25 @@ function updateTechStack($data, $conn, $id)
     $percentage = intval($data['percentage']);
     $type = mysqli_real_escape_string($conn, $data['type']);
 
-    $query = "UPDATE tech_stack SET 
-              name = '$name',
-              percentage = $percentage,
-              type = '$type'";
+    $stmt = mysqli_prepare($conn, "UPDATE tech_stack SET name = ?, percentage = ?, type = ? WHERE id = ?");
+    mysqli_stmt_bind_param($stmt, "sisi", $name, $percentage, $type, $id);
 
     // Handle image upload
     if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
         $image = uploadImage($_FILES['image'], 'tech');
         if ($image) {
-            $query .= ", image = '$image'";
+            $stmt2 = mysqli_prepare($conn, "UPDATE tech_stack SET image = ? WHERE id = ?");
+            mysqli_stmt_bind_param($stmt2, "si", $image, $id);
+            mysqli_stmt_execute($stmt2);
+            mysqli_stmt_close($stmt2);
         }
     }
 
-    $query .= " WHERE id = $id";
-
-    if (mysqli_query($conn, $query)) {
+    if (mysqli_stmt_execute($stmt)) {
+        mysqli_stmt_close($stmt);
         return ['success' => true, 'message' => 'Tech stack updated successfully'];
     } else {
+        mysqli_stmt_close($stmt);
         return ['success' => false, 'message' => 'Failed to update tech stack: ' . mysqli_error($conn)];
     }
 }
@@ -721,27 +741,26 @@ function updateProject($data, $conn, $id)
     $vid = mysqli_real_escape_string($conn, $data['vid'] ?? '');
     $repository = mysqli_real_escape_string($conn, $data['repository']);
 
-    $query = "UPDATE project SET 
-              title = '$title',
-              short_desc = '$short_desc',
-              long_desc = '$long_desc',
-              vid = '$vid',
-              repository = '$repository'";
+    $stmt = mysqli_prepare($conn, "UPDATE project SET title = ?, short_desc = ?, long_desc = ?, vid = ?, repository = ? WHERE id = ?");
+    mysqli_stmt_bind_param($stmt, "sssssi", $title, $short_desc, $long_desc, $vid, $repository, $id);
 
     // Handle image upload
     if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
         $image = uploadImage($_FILES['image'], 'project');
         if ($image) {
-            $query .= ", image = '$image'";
+            $stmt2 = mysqli_prepare($conn, "UPDATE project SET image = ? WHERE id = ?");
+            mysqli_stmt_bind_param($stmt2, "si", $image, $id);
+            mysqli_stmt_execute($stmt2);
+            mysqli_stmt_close($stmt2);
         }
     }
 
-    $query .= " WHERE id = $id";
-
-    if (mysqli_query($conn, $query)) {
+    if (mysqli_stmt_execute($stmt)) {
+        mysqli_stmt_close($stmt);
         return ['success' => true, 'message' => 'Project updated successfully'];
     } else {
-        return ['success' => false, 'message' => 'Failed to update project'];
+        mysqli_stmt_close($stmt);
+        return ['success' => false, 'message' => 'Failed to update project: ' . mysqli_error($conn)];
     }
 }
 
@@ -772,13 +791,15 @@ function insertEducation($data, $conn)
     $start_year = intval($data['start_year']);
     $end_year = intval($data['end_year']);
 
-    $query = "INSERT INTO education (title, school, school_address, start_year, end_year) 
-              VALUES ('$title', '$school', '$school_address', $start_year, $end_year)";
+    $stmt = mysqli_prepare($conn, "INSERT INTO education (title, school, school_address, start_year, end_year) VALUES (?, ?, ?, ?, ?)");
+    mysqli_stmt_bind_param($stmt, "sssii", $title, $school, $school_address, $start_year, $end_year);
 
-    if (mysqli_query($conn, $query)) {
+    if (mysqli_stmt_execute($stmt)) {
+        mysqli_stmt_close($stmt);
         return ['success' => true, 'message' => 'Education added successfully'];
     } else {
-        return ['success' => false, 'message' => 'Failed to add education'];
+        mysqli_stmt_close($stmt);
+        return ['success' => false, 'message' => 'Failed to add education: ' . mysqli_error($conn)];
     }
 }
 
@@ -796,13 +817,15 @@ function insertTechStack($data, $conn)
         }
     }
 
-    $query = "INSERT INTO tech_stack (name, percentage, image, type) 
-              VALUES ('$name', $percentage, '$image', '$type')";
+    $stmt = mysqli_prepare($conn, "INSERT INTO tech_stack (name, percentage, image, type) VALUES (?, ?, ?, ?)");
+    mysqli_stmt_bind_param($stmt, "siss", $name, $percentage, $image, $type);
 
-    if (mysqli_query($conn, $query)) {
+    if (mysqli_stmt_execute($stmt)) {
+        mysqli_stmt_close($stmt);
         return ['success' => true, 'message' => 'Technology added successfully'];
     } else {
-        return ['success' => false, 'message' => 'Failed to add technology'];
+        mysqli_stmt_close($stmt);
+        return ['success' => false, 'message' => 'Failed to add technology: ' . mysqli_error($conn)];
     }
 }
 
@@ -822,13 +845,15 @@ function insertProject($data, $conn)
         }
     }
 
-    $query = "INSERT INTO project (title, image, short_desc, long_desc, vid, repository) 
-              VALUES ('$title', '$image', '$short_desc', '$long_desc', '$vid', '$repository')";
+    $stmt = mysqli_prepare($conn, "INSERT INTO project (title, image, short_desc, long_desc, vid, repository) VALUES (?, ?, ?, ?, ?, ?)");
+    mysqli_stmt_bind_param($stmt, "ssssss", $title, $image, $short_desc, $long_desc, $vid, $repository);
 
-    if (mysqli_query($conn, $query)) {
+    if (mysqli_stmt_execute($stmt)) {
+        mysqli_stmt_close($stmt);
         return ['success' => true, 'message' => 'Project added successfully'];
     } else {
-        return ['success' => false, 'message' => 'Failed to add project'];
+        mysqli_stmt_close($stmt);
+        return ['success' => false, 'message' => 'Failed to add project: ' . mysqli_error($conn)];
     }
 }
 
@@ -846,12 +871,21 @@ function handleDelete($section, $id, $conn)
         return ['success' => false, 'message' => 'Cannot delete personal information'];
     }
 
-    $query = "DELETE FROM $section WHERE id = $id";
+    // Validate table name
+    $allowed_tables = ['education', 'tech_stack', 'project'];
+    if (!in_array($section, $allowed_tables)) {
+        return ['success' => false, 'message' => 'Invalid section'];
+    }
 
-    if (mysqli_query($conn, $query)) {
+    $stmt = mysqli_prepare($conn, "DELETE FROM $section WHERE id = ?");
+    mysqli_stmt_bind_param($stmt, "i", $id);
+
+    if (mysqli_stmt_execute($stmt)) {
+        mysqli_stmt_close($stmt);
         return ['success' => true, 'message' => 'Item deleted successfully'];
     } else {
-        return ['success' => false, 'message' => 'Failed to delete item'];
+        mysqli_stmt_close($stmt);
+        return ['success' => false, 'message' => 'Failed to delete item: ' . mysqli_error($conn)];
     }
 }
 
@@ -861,7 +895,7 @@ function handleDelete($section, $id, $conn)
 
 function uploadImage($file, $prefix = 'upload')
 {
-    $target_dir = "../uploads/"; // Adjust this path as needed
+    $target_dir = "../uploads/";
 
     // Create uploads directory if it doesn't exist
     if (!file_exists($target_dir)) {
@@ -869,7 +903,7 @@ function uploadImage($file, $prefix = 'upload')
     }
 
     $file_extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-    $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'mp4'];
+    $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
     // Validate file extension
     if (!in_array($file_extension, $allowed_extensions)) {
