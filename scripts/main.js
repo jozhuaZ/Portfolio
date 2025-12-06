@@ -361,10 +361,10 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 if (data.success) {
                     showSuccess(data.message || 'Changes saved successfully');
-                    // Reload the section after a short delay
+
+                    // ADDED: Reload window after successful save
                     setTimeout(() => {
-                        const section = formData.get('section');
-                        loadSection(section);
+                        window.location.reload();
                     }, 1000);
                 } else {
                     showError(data.message || 'Failed to save changes');
@@ -448,7 +448,11 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 if (data.success) {
                     showSuccess(data.message || 'Item deleted successfully');
-                    loadSection(section);
+
+                    // ADDED: Reload window after successful delete
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
                 } else {
                     showError(data.message || 'Failed to delete item');
                     if (deleteBtn) {
