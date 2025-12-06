@@ -193,8 +193,6 @@ function showLess() {
     document.body.classList.remove("overlay-active");
 }
 
-
-
 // ============================
 // ADMIN PANEL FUNCTIONALITY - FIXED
 // ============================
@@ -362,9 +360,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (data.success) {
                     showSuccess(data.message || 'Changes saved successfully');
 
-                    // ADDED: Reload window after successful save
+                    // MODIFIED: Reload only the section after 1 second delay
                     setTimeout(() => {
-                        window.location.reload();
+                        const section = formData.get('section');
+                        loadSection(section);
                     }, 1000);
                 } else {
                     showError(data.message || 'Failed to save changes');
@@ -449,9 +448,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (data.success) {
                     showSuccess(data.message || 'Item deleted successfully');
 
-                    // ADDED: Reload window after successful delete
+                    // MODIFIED: Reload only the section after 1 second delay
                     setTimeout(() => {
-                        window.location.reload();
+                        loadSection(section);
                     }, 1000);
                 } else {
                     showError(data.message || 'Failed to delete item');
